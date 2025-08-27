@@ -36,13 +36,39 @@ require("lazy").setup({
   { "numToStr/Comment.nvim", opts = {} },
 
   -- Autocomplete
-  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/nvim-cmp", config = function()
+    local cmp = require("cmp")
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          vim.fn["vsnip#anonymous"](args.body)
+        end,
+      },
+      mapping = {
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      },
+      sources = {
+        { name = "nvim_lsp" },
+        { name = "vsnip" },
+        { name = "buffer" },
+        { name = "path" },
+      },
+    })
+  end },
   { "hrsh7th/cmp-nvim-lsp" },
   -- Snippets
   { "hrsh7th/cmp-vsnip" },
   { "hrsh7th/vim-vsnip" },
   -- TypeScript-specific enhancements
-  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
+  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, config = function()
+    require("typescript-tools").setup({})
+  end },
 
   -- AI
   {
@@ -141,6 +167,9 @@ require("lazy").setup({
   },
   -- Undo
   "mbbill/undotree",
+  keys = {
+    { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle Undotree" },
+  },
   -- Colorschemes
   "morhetz/gruvbox",
   "tomasr/molokai",
