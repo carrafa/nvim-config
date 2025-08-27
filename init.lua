@@ -75,6 +75,52 @@ require("lazy").setup({
     end,
     dependencies = { "hrsh7th/nvim-cmp" },
   },
+  -- Git signs and hunk operations
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "" },
+        topdelete = { text = "" },
+        changedelete = { text = "▎" },
+        untracked = { text = "▎" },
+      },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        -- Navigation
+        vim.keymap.set("n", "]h", gs.next_hunk, { buffer = bufnr, desc = "Next Hunk" })
+        vim.keymap.set("n", "[h", gs.prev_hunk, { buffer = bufnr, desc = "Prev Hunk" })
+
+        -- Actions
+        vim.keymap.set({ "n", "v" }, "<leader>hs", gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
+        vim.keymap.set({ "n", "v" }, "<leader>hr", gs.reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
+        vim.keymap.set("n", "<leader>hS", gs.stage_buffer, { buffer = bufnr, desc = "Stage buffer" })
+        vim.keymap.set("n", "<leader>hu", gs.undo_stage_hunk, { buffer = bufnr, desc = "Undo stage hunk" })
+        vim.keymap.set("n", "<leader>hR", gs.reset_buffer, { buffer = bufnr, desc = "Reset buffer" })
+        vim.keymap.set("n", "<leader>hp", gs.preview_hunk, { buffer = bufnr, desc = "Preview hunk" })
+        vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full = true }) end, { buffer = bufnr, desc = "Blame line" })
+
+        -- Text object
+        vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { buffer = bufnr })
+      end,
+    }
+  },
+  -- Git commands wrapper
+  {
+    "tpope/vim-fugitive",
+    cmd = { "G", "Git" }, -- Lazy-load on commands
+    keys = {
+      { "<leader>gs", "<cmd>Git<CR>", desc = "Git status" },
+      { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
+      { "<leader>gp", "<cmd>Git push<CR>", desc = "Git push" },
+      { "<leader>gl", "<cmd>Git pull<CR>", desc = "Git pull" },
+      { "<leader>gd", "<cmd>Gdiffsplit<CR>", desc = "Git diff" },
+      { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
+    },
+  },
   -- Linting
   "dense-analysis/ale",
   -- Statusline
