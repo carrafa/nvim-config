@@ -7,12 +7,12 @@ return {
       { "<leader>as", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
       { "<leader>ac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
       { "<leader>ab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
-      { "<leader>aA", "<cmd>Aider add<cr>", desc = "Add File" },  -- Note: Removed duplicate entry for clarity
+      { "<leader>a+", "<cmd>Aider add<cr>", desc = "Add File" },  -- Note: Removed duplicate entry for clarity
       { "<leader>a-", "<cmd>Aider drop<cr>", desc = "Drop File" },
       { "<leader>ar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
       { "<leader>aR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
-      { "<leader>aT+", "<cmd>AiderTreeAddFile<cr>", desc = "Add File from Tree to Aider", ft = "NvimTree" },
-      { "<leader>aT-", "<cmd>AiderTreeDropFile<cr>", desc = "Drop File from Tree from Aider", ft = "NvimTree" },
+      { "<leader>a+", "<cmd>AiderTreeAddFile<cr>", desc = "Add File from Tree to Aider", ft = "NvimTree" },
+      { "<leader>a-", "<cmd>AiderTreeDropFile<cr>", desc = "Drop File from Tree from Aider", ft = "NvimTree" },
     },
     dependencies = {
       {
@@ -39,8 +39,9 @@ return {
     config = function()
       require("nvim_aider").setup({
         args = {
-          -- "--model xai/grok-3-mini-fast-beta"
-          "--model openai/gpt-5-nano" 
+          "--model xai/grok-4"
+          --"model openai/gpt-5-nano" 
+          -- "--model openai/gpt-5-mini" 
         }
       })
     end,
