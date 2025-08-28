@@ -15,7 +15,17 @@ return {
       { "<leader>a-", "<cmd>AiderTreeDropFile<cr>", desc = "Drop File from Tree from Aider", ft = "NvimTree" },
     },
     dependencies = {
-      "folke/snacks.nvim",
+      {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+          image = { enabled = true },
+          notifier = { enabled = true },
+          indent = { enabled = true },
+        },
+      },
       "catppuccin/nvim",
       "nvim-tree/nvim-tree.lua",
       {
