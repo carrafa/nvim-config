@@ -27,7 +27,7 @@ return {
     },
     config = function()
       require("nvim_aider").setup({
-        model = "claude-3-opus-20240229", -- Default model
+        model = "grok-4",
       })
     end,
   }
