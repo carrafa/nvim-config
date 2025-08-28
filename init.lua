@@ -150,65 +150,9 @@ require("lazy").setup({
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 })
 
--- General settings
-vim.opt.hidden = true
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-vim.opt.tabstop = 2
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.wrap = true
-vim.opt.linebreak = true
-vim.opt.textwidth = 500
-vim.opt.ignorecase = true
-vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.ttyfast = true
-vim.opt.number = true
-vim.opt.relativenumber = false
-vim.opt.cursorline = true
-vim.opt.showmatch = true
-vim.opt.laststatus = 3
-
--- UI and colors
-vim.opt.background = "dark"
-vim.opt.termguicolors = true
-vim.cmd.colorscheme("gruvbox")
-vim.g.gruvbox_contrast_light = "hard"
-vim.g.solarized_termcolors = 256
-vim.g.rehash256 = 1
-
--- Keymappings
-vim.keymap.set("n", "<Leader>bg", function() vim.opt.background = (vim.opt.background:get() == "dark" and "light" or "dark") end, { desc = "Toggle background" })
-vim.keymap.set("n", "<leader>mg", ":colorscheme gruvbox<CR>", { desc = "Set gruvbox" })
-vim.keymap.set("n", "<leader>mm", ":colorscheme molokai<CR>", { desc = "Set molokai" })
-vim.keymap.set("n", "<leader>mb", ":colorscheme catppuccin<CR>", { desc = "Set catppuccin" })
-vim.keymap.set("n", "<leader>mn", ":colorscheme tokyonight<CR>", { desc = "Set tokyonight" })
-vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit Neovim" })  -- New: Added quit mapping
-
--- Telescope mappings
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-
--- Other mappings
-vim.keymap.set("n", "<leader>w", ":w!<CR>", { desc = "Force write" })
-
--- Autocmds
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
-      vim.cmd("normal! g`\"")
-    end
-  end,
-})
+require("core.options")
+require("core.keymaps")
+require("core.autocmds")
 
 -- Plugin configs
 -- ALE
@@ -226,40 +170,10 @@ vim.g.ale_fix_on_save = 1
 -- Lualine setup
 require("lualine").setup({ extensions = { "nvim-tree" } })
 
--- Nvim-tree keybindings
-vim.keymap.set('n', '<C-t>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle NvimTree" })
-vim.keymap.set('n', '<leader>t', ':NvimTreeFocus<CR>', { noremap = true, silent = true, desc = "Focus NvimTree" })
-vim.keymap.set('n', '<C-w>', '<C-w>w', { noremap = true, silent = true, desc = "Cycle windows" })
-
 -- Treesitter
 require("nvim-treesitter.configs").setup({
   ensure_installed = { "lua", "vim", "javascript", "elixir", "html" },
   highlight = { enable = true },
-})
-
--- Coc
-vim.api.nvim_set_keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true, noremap = true })
-vim.api.nvim_set_keymap("i", "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true, noremap = true })
-vim.api.nvim_set_keymap("n", "gd", "<Plug>(coc-definition)", { silent = true })
-vim.api.nvim_set_keymap("n", "gr", "<Plug>(coc-references)", { silent = true })
-vim.api.nvim_set_keymap("n", "K", ":call CocAction('doHover')<CR>", { silent = true })
-
--- File operations
-vim.keymap.set("n", "<Leader>cp", ":let @+ = expand('%:p')<CR>", { noremap = true, silent = true, desc = "Copy full path" })
-vim.keymap.set("n", "<Leader>cr", ":let @+ = expand('%')<CR>", { noremap = true, silent = true, desc = "Copy relative path" })
-vim.keymap.set("n", "<Leader>cf", ":let @+ = expand('%:t')<CR>", { noremap = true, silent = true, desc = "Copy filename" })
-
--- Magenta file search (custom)
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'magenta*',
-  callback = function()
-    require('cmp').setup.buffer({
-      mapping = {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-      }
-    })
-  end
 })
 
 -- Comment Toggle
@@ -273,7 +187,3 @@ require("Comment").setup({
     block = "<Leader>?",
   },
 })
-
--- Syntax and filetype
-vim.cmd("syntax enable")
-vim.cmd("filetype plugin indent on")
