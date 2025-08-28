@@ -1,7 +1,7 @@
--- Bootstrap lazy.nvim
+-- Bootstrap lazy.nvim with error handling
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
+  local clone_success = vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
@@ -9,10 +9,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     "--branch=stable",
     lazypath,
   })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_err_writeln("Failed to clone lazy.nvim: " .. clone_success)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Plugins
+-- Plugin setup
 require("lazy").setup({
   dev = {
     path = "/Users/carrafa/dev"
@@ -87,12 +90,8 @@ require("lazy").setup({
       },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
-
-        -- Navigation
         vim.keymap.set("n", "]h", gs.next_hunk, { buffer = bufnr, desc = "Next Hunk" })
         vim.keymap.set("n", "[h", gs.prev_hunk, { buffer = bufnr, desc = "Prev Hunk" })
-
-        -- Actions
         vim.keymap.set({ "n", "v" }, "<leader>hs", gs.stage_hunk, { buffer = bufnr, desc = "Stage hunk" })
         vim.keymap.set({ "n", "v" }, "<leader>hr", gs.reset_hunk, { buffer = bufnr, desc = "Reset hunk" })
         vim.keymap.set("n", "<leader>hS", gs.stage_buffer, { buffer = bufnr, desc = "Stage buffer" })
@@ -100,8 +99,6 @@ require("lazy").setup({
         vim.keymap.set("n", "<leader>hR", gs.reset_buffer, { buffer = bufnr, desc = "Reset buffer" })
         vim.keymap.set("n", "<leader>hp", gs.preview_hunk, { buffer = bufnr, desc = "Preview hunk" })
         vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full = true }) end, { buffer = bufnr, desc = "Blame line" })
-
-        -- Text object
         vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { buffer = bufnr })
       end,
     }
@@ -109,7 +106,7 @@ require("lazy").setup({
   -- Git commands wrapper
   {
     "tpope/vim-fugitive",
-    cmd = { "G", "Git" }, -- Lazy-load on commands
+    cmd = { "G", "Git" },
     keys = {
       { "<leader>gs", "<cmd>Git<CR>", desc = "Git status" },
       { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
@@ -132,7 +129,7 @@ require("lazy").setup({
         view = { width = 30, side = "left" },
         actions = {
           change_dir = { enable = true },
-          use_system_clipboard = false, -- Disable system clipboard for y/p
+          use_system_clipboard = false,
         },
       })
     end,
@@ -181,14 +178,15 @@ vim.g.gruvbox_contrast_light = "hard"
 vim.g.solarized_termcolors = 256
 vim.g.rehash256 = 1
 
--- Mappings for toggle and changers
-vim.keymap.set("n", "<Leader>bg", function() vim.opt.background = (vim.opt.background:get() == "dark" and "light" or "dark") end)
-vim.keymap.set("n", "<leader>mg", ":colorscheme gruvbox<CR>")
-vim.keymap.set("n", "<leader>mm", ":colorscheme molokai<CR>")
-vim.keymap.set("n", "<leader>mb", ":colorscheme catppuccin<CR>")
-vim.keymap.set("n", "<leader>mn", ":colorscheme tokyonight<CR>")
+-- Keymappings
+vim.keymap.set("n", "<Leader>bg", function() vim.opt.background = (vim.opt.background:get() == "dark" and "light" or "dark") end, { desc = "Toggle background" })
+vim.keymap.set("n", "<leader>mg", ":colorscheme gruvbox<CR>", { desc = "Set gruvbox" })
+vim.keymap.set("n", "<leader>mm", ":colorscheme molokai<CR>", { desc = "Set molokai" })
+vim.keymap.set("n", "<leader>mb", ":colorscheme catppuccin<CR>", { desc = "Set catppuccin" })
+vim.keymap.set("n", "<leader>mn", ":colorscheme tokyonight<CR>", { desc = "Set tokyonight" })
+vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit Neovim" })  -- New: Added quit mapping
 
--- Telescope
+-- Telescope mappings
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
@@ -196,7 +194,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- Other mappings
-vim.keymap.set("n", "<leader>w", ":w!<CR>")
+vim.keymap.set("n", "<leader>w", ":w!<CR>", { desc = "Force write" })
 
 -- Autocmds
 vim.api.nvim_create_autocmd("BufReadPost", {
@@ -225,9 +223,9 @@ vim.g.ale_fix_on_save = 1
 require("lualine").setup({ extensions = { "nvim-tree" } })
 
 -- Nvim-tree keybindings
-vim.keymap.set('n', '<C-t>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>t', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-w>', '<C-w>w', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-t>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle NvimTree" })
+vim.keymap.set('n', '<leader>t', ':NvimTreeFocus<CR>', { noremap = true, silent = true, desc = "Focus NvimTree" })
+vim.keymap.set('n', '<C-w>', '<C-w>w', { noremap = true, silent = true, desc = "Cycle windows" })
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
@@ -236,31 +234,23 @@ require("nvim-treesitter.configs").setup({
 })
 
 -- Coc
-
--- Use <Tab> and <S-Tab> for autocomplete navigation
 vim.api.nvim_set_keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true, noremap = true })
 vim.api.nvim_set_keymap("i", "<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", { expr = true, noremap = true })
-
--- Go to definition
 vim.api.nvim_set_keymap("n", "gd", "<Plug>(coc-definition)", { silent = true })
 vim.api.nvim_set_keymap("n", "gr", "<Plug>(coc-references)", { silent = true })
 vim.api.nvim_set_keymap("n", "K", ":call CocAction('doHover')<CR>", { silent = true })
 
--- files
--- Copy full path to clipboard
-vim.keymap.set("n", "<Leader>cp", ":let @+ = expand('%:p')<CR>", { noremap = true, silent = true })
--- Copy relative path to clipboard
-vim.keymap.set("n", "<Leader>cr", ":let @+ = expand('%')<CR>", { noremap = true, silent = true })
--- Copy file name to clipboard
-vim.keymap.set("n", "<Leader>cf", ":let @+ = expand('%:t')<CR>", { noremap = true, silent = true })
+-- File operations
+vim.keymap.set("n", "<Leader>cp", ":let @+ = expand('%:p')<CR>", { noremap = true, silent = true, desc = "Copy full path" })
+vim.keymap.set("n", "<Leader>cr", ":let @+ = expand('%')<CR>", { noremap = true, silent = true, desc = "Copy relative path" })
+vim.keymap.set("n", "<Leader>cf", ":let @+ = expand('%:t')<CR>", { noremap = true, silent = true, desc = "Copy filename" })
 
--- magenta file search
+-- Magenta file search (custom)
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'magenta*',  -- Adjust pattern if needed (check with :echo &ft in the buffer)
+  pattern = 'magenta*',
   callback = function()
     require('cmp').setup.buffer({
       mapping = {
-        -- Put your Tab mappings here for buffer-local
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
       }
@@ -271,15 +261,15 @@ vim.api.nvim_create_autocmd('FileType', {
 -- Comment Toggle
 require("Comment").setup({
   toggler = {
-    line = "<Leader>/", -- Line-comment toggle
-    block = "<Leader>?", -- Block-comment toggle
+    line = "<Leader>/",
+    block = "<Leader>?",
   },
   opleader = {
-    line = "<Leader>/", -- Line-comment in visual mode
-    block = "<Leader>?", -- Block-comment in visual mode
+    line = "<Leader>/",
+    block = "<Leader>?",
   },
 })
 
--- Syntax/filetype
+-- Syntax and filetype
 vim.cmd("syntax enable")
 vim.cmd("filetype plugin indent on")

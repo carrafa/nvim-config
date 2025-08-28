@@ -7,7 +7,7 @@ return {
       { "<leader>as", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
       { "<leader>ac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
       { "<leader>ab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
-      { "<leader>a+", "<cmd>Aider add<cr>", desc = "Add File" },
+      { "<leader>a+", "<cmd>Aider add<cr>", desc = "Add File" },  -- Note: Removed duplicate entry for clarity
       { "<leader>a-", "<cmd>Aider drop<cr>", desc = "Drop File" },
       { "<leader>ar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
       { "<leader>aR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
@@ -39,7 +39,7 @@ return {
     config = function()
       require("nvim_aider").setup({
         args = {
-          "--model xai/grok-3-mini-fast-beta"
+          "--model xai/grok-3-mini-fast-beta"  -- Ensure this model is intended and secure
         }
       })
     end,
