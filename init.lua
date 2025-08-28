@@ -14,6 +14,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
+vim.g.mapleader = " "
 
 -- Plugin setup
 require("lazy").setup({
@@ -163,16 +164,20 @@ vim.opt.wrap = true
 vim.opt.linebreak = true
 vim.opt.textwidth = 500
 vim.opt.ignorecase = true
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ttyfast = true
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.showmatch = true
 vim.opt.laststatus = 3
 
 -- UI and colors
 vim.opt.background = "dark"
+vim.opt.termguicolors = true
 vim.cmd.colorscheme("gruvbox")
 vim.g.gruvbox_contrast_light = "hard"
 vim.g.solarized_termcolors = 256
