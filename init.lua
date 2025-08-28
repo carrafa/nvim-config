@@ -14,7 +14,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
-vim.g.mapleader = " "
 
 -- Plugin setup
 require("lazy").setup({
@@ -170,7 +169,7 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ttyfast = true
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.cursorline = true
 vim.opt.showmatch = true
 vim.opt.laststatus = 3
