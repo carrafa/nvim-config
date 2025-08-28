@@ -23,7 +23,7 @@ return {
         opts = {
           image = { enabled = true },
           notifier = { enabled = true },
-          indent = { enabled = true },
+          indent = { enabled = false },
         },
       },
       "catppuccin/nvim",
