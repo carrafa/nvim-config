@@ -31,6 +31,14 @@ require("lazy").setup({
       require("telescope").setup {}
     end,
   },
+  -- Completion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+    },
+  },
   -- Completion/LSP
   { "neoclide/coc.nvim", branch = "release", build = "coc#util#install()" },
   { "amiralies/coc-elixir", build = "yarn install && yarn prepack" },
@@ -117,6 +125,7 @@ require("lazy").setup({
 require("core.options")
 require("core.keymaps")
 require("core.autocmds")
+require("core.completion")
 
 -- Plugin configs
 -- ALE
