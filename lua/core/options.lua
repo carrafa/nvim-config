@@ -9,7 +9,7 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.wrap = true
 vim.opt.linebreak = true
-vim.opt.textwidth = 500
+vim.opt.textwidth = 80
 vim.opt.ignorecase = true
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
@@ -17,10 +17,11 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ttyfast = true
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.showmatch = true
 vim.opt.laststatus = 3
+vim.opt.signcolumn = "yes"
 
 -- UI and colors
 vim.opt.background = "dark"

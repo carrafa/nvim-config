@@ -34,44 +34,8 @@ require("lazy").setup({
   -- Completion/LSP
   { "neoclide/coc.nvim", branch = "release", build = "coc#util#install()" },
   { "amiralies/coc-elixir", build = "yarn install && yarn prepack" },
-  { "neovim/nvim-lspconfig" },
   -- Comment
   { "numToStr/Comment.nvim", opts = {} },
-
-  -- Autocomplete
-  { "hrsh7th/nvim-cmp", config = function()
-    local cmp = require("cmp")
-    cmp.setup({
-      snippet = {
-        expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body)
-        end,
-      },
-      mapping = {
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      },
-      sources = {
-        { name = "nvim_lsp" },
-        { name = "vsnip" },
-        { name = "buffer" },
-        { name = "path" },
-      },
-    })
-  end },
-  { "hrsh7th/cmp-nvim-lsp" },
-  -- Snippets
-  { "hrsh7th/cmp-vsnip" },
-  { "hrsh7th/vim-vsnip" },
-  -- TypeScript-specific enhancements
-  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" }, config = function()
-    require("typescript-tools").setup({})
-  end },
 
   -- AI
   require("plugins.aider"),
@@ -168,7 +132,10 @@ vim.g.ale_sign_warning = "⚠"
 vim.g.ale_fix_on_save = 1
 
 -- Lualine setup
-require("lualine").setup({ extensions = { "nvim-tree" } })
+require("lualine").setup({
+  options = { theme = "gruvbox" },
+  extensions = { "nvim-tree" }
+})
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({

@@ -21,11 +21,11 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 
 -- Other mappings
 vim.keymap.set("n", "<leader>w", ":w!<CR>", { desc = "Force write" })
+vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>", { desc = "Clear search highlights" })
 
 -- Nvim-tree keybindings
 vim.keymap.set('n', '<C-t>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = "Toggle NvimTree" })
 vim.keymap.set('n', '<leader>t', ':NvimTreeFocus<CR>', { noremap = true, silent = true, desc = "Focus NvimTree" })
-vim.keymap.set('n', '<C-w>', '<C-w>w', { noremap = true, silent = true, desc = "Cycle windows" })
 
 -- Coc
 vim.api.nvim_set_keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", { expr = true, noremap = true })

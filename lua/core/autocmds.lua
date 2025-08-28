@@ -8,16 +8,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- Magenta file search (custom)
+-- Magenta file search (custom) - Adjusted to remove cmp reference; using Coc for completion if needed
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'magenta*',
   callback = function()
-    require('cmp').setup.buffer({
-      mapping = {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-      }
-    })
+    -- Completion handled by Coc; no additional setup needed
   end
 })
 
