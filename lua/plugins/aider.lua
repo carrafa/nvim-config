@@ -38,7 +38,9 @@ return {
     },
     config = function()
       require("nvim_aider").setup({
-        model = "xai/grok-beta",
+        args = {
+          "--model xai/grok-3-mini-fast-beta"
+        }
       })
     end,
   }
