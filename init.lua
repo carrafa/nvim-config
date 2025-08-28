@@ -185,7 +185,8 @@ vim.g.rehash256 = 1
 vim.keymap.set("n", "<Leader>bg", function() vim.opt.background = (vim.opt.background:get() == "dark" and "light" or "dark") end)
 vim.keymap.set("n", "<leader>mg", ":colorscheme gruvbox<CR>")
 vim.keymap.set("n", "<leader>mm", ":colorscheme molokai<CR>")
-vim.keymap.set("n", "<leader>mb", ":colorscheme badwolf<CR>")
+vim.keymap.set("n", "<leader>mb", ":colorscheme catppuccin<CR>")
+vim.keymap.set("n", "<leader>mn", ":colorscheme tokyonight<CR>")
 
 -- Telescope
 local builtin = require('telescope.builtin')
