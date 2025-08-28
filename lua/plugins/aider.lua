@@ -39,7 +39,8 @@ return {
     config = function()
       require("nvim_aider").setup({
         args = {
-          "--model xai/grok-3-mini-fast-beta"  -- Ensure this model is intended and secure
+          -- "--model xai/grok-3-mini-fast-beta"
+          "--model openai/gpt-5-nano" 
         }
       })
     end,
