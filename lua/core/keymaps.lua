@@ -13,6 +13,12 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live gr
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
+-- window navigation
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
+
 -- Other mappings
 vim.keymap.set("n", "<leader>w", ":w!<CR>", { desc = "Force write" })
 
