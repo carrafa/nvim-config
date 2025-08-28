@@ -20,6 +20,7 @@ return {
       "nvim-tree/nvim-tree.lua",
       {
         "nvim-neo-tree/neo-tree.nvim",
+        version = "3.*",
         opts = function(_, opts)
           require("nvim_aider.neo_tree").setup(opts)
         end,
