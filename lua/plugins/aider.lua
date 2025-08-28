@@ -26,7 +26,6 @@ return {
       },
     },
     config = function()
-      vim.env.XAI_API_KEY = "your-xai-api-key-here" -- Replace with your actual API key
       require("nvim_aider").setup({
         model = "xai/grok-beta",
       })
