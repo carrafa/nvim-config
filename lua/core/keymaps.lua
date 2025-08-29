@@ -4,7 +4,8 @@ vim.keymap.set("n", "<leader>mg", ":colorscheme gruvbox<CR>", { desc = "Set gruv
 vim.keymap.set("n", "<leader>mm", ":colorscheme molokai<CR>", { desc = "Set molokai" })
 vim.keymap.set("n", "<leader>mb", ":colorscheme catppuccin<CR>", { desc = "Set catppuccin" })
 vim.keymap.set("n", "<leader>mn", ":colorscheme tokyonight<CR>", { desc = "Set tokyonight" })
-vim.keymap.set("n", "<leader>q", ":qa!<CR>", { desc = "Quit Neovim" })  -- New: Added quit mapping
+vim.keymap.set("n", "<leader>qa", ":qa!<CR>", { desc = "Quit Neovim" })
+vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit Neovim" })
 
 -- Telescope mappings
 local builtin = require('telescope.builtin')

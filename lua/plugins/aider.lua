@@ -39,8 +39,9 @@ return {
     config = function()
       require("nvim_aider").setup({
         args = {
-          "--model xai/grok-4"
-          --"model openai/gpt-5-nano" 
+          "--model xai/grok-code-fast-1"
+          -- "--model xai/grok-4"
+          -- "--model openai/gpt-5-nano" 
           -- "--model openai/gpt-5-mini" 
         }
       })

@@ -75,20 +75,16 @@ require("lazy").setup({
       end,
     }
   },
-  -- Git commands wrapper
+  -- Git commands wrapper (kept for specialized use, but streamlined)
   {
     "tpope/vim-fugitive",
-    cmd = { "G", "Git" },
+    lazy = false,  -- Load immediately to ensure all commands are available
     keys = {
-      { "<leader>gs", "<cmd>Git<CR>", desc = "Git status" },
-      { "<leader>gc", "<cmd>Git commit<CR>", desc = "Git commit" },
-      { "<leader>gp", "<cmd>Git push<CR>", desc = "Git push" },
-      { "<leader>gl", "<cmd>Git pull<CR>", desc = "Git pull" },
-      { "<leader>gd", "<cmd>Gdiffsplit<CR>", desc = "Git diff" },
+      { "<leader>gd", "<cmd>Gdiffsplit<CR>", desc = "Git diff split" },
       { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
-      { "<leader>gL", "<cmd>Glog<CR>", desc = "Git log" },
-      { "<leader>go", "<cmd>Glog --oneline<CR>", desc = "Git log oneline" },
-      { "<leader>gf", "<cmd>Glog -- %<CR>", desc = "Git log for current file" },
+      { "<leader>gL", "<cmd>Git log<CR>", desc = "Git log" },
+      { "<leader>go", "<cmd>Git log --oneline<CR>", desc = "Git log oneline" },
+      { "<leader>gf", "<cmd>Git log -- %<CR>", desc = "Git log for current file" },
       { "<leader>gv", "<cmd>Gvdiffsplit<CR>", desc = "Git vertical diff" },
       { "<leader>ge", "<cmd>Gedit<CR>", desc = "Git edit file at commit" },
       { "<leader>gr", "<cmd>Gread<CR>", desc = "Git read from index" },
