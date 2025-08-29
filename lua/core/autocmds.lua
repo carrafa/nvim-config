@@ -16,6 +16,19 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+-- Aider terminal navigation mappings
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.buftype == 'terminal' and vim.fn.bufname():match('aider') then
+      vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h', { buffer = true, desc = 'Move to left window' })
+      vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j', { buffer = true, desc = 'Move to bottom window' })
+      vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k', { buffer = true, desc = 'Move to top window' })
+      vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l', { buffer = true, desc = 'Move to right window' })
+    end
+  end
+})
+
 -- Syntax and filetype
 vim.cmd("syntax enable")
 vim.cmd("filetype plugin indent on")
